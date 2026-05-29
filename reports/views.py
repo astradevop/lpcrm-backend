@@ -43,11 +43,13 @@ class MyDailyReportsView(generics.ListAPIView):
     pagination_class = DailyReportPagination
 
     def get_queryset(self):
-        return (
-            DailyReport.objects.filter(user=self.request.user)
-            .prefetch_related("attachments")
-            .order_by("-report_date")
-        )
+        qs = DailyReport.objects.filter(user=self.request.user).prefetch_related("attachments")
+        
+        company = self.request.query_params.get("company")
+        if company:
+            qs = qs.filter(company=company)
+            
+        return qs.order_by("-report_date")
 
 
 class MyDailyReportUpdateView(generics.UpdateAPIView):
@@ -82,6 +84,7 @@ class AllDailyReportsView(generics.ListAPIView):
         status = self.request.query_params.get("status")
         user = self.request.query_params.get("user")
         date = self.request.query_params.get("date")
+        company = self.request.query_params.get("company")
 
         if status:
             qs = qs.filter(status=status)
@@ -89,6 +92,8 @@ class AllDailyReportsView(generics.ListAPIView):
             qs = qs.filter(user__id=user)
         if date:
             qs = qs.filter(report_date=date)
+        if company:
+            qs = qs.filter(company=company)
 
         qs = qs.annotate(
             status_order=Case(
@@ -132,6 +137,10 @@ class AdminReportStatsView(APIView):
     def get(self, request):
         today = now()
         qs = DailyReport.objects.all()
+        
+        company = request.query_params.get("company")
+        if company:
+            qs = qs.filter(company=company)
 
         return Response(
             {

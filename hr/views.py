@@ -31,6 +31,11 @@ class PenaltyListCreateAPI(APIView):
         user_id = request.GET.get("user")
         if user_id:
             penalties = penalties.filter(user_id=user_id)
+            
+        # Filter by company
+        company = request.GET.get("company")
+        if company:
+            penalties = penalties.filter(company=company)
         
         # Serialize with user details
         serializer = PenaltySerializer(
@@ -107,6 +112,10 @@ class AttendanceDocumentAPI(APIView):
         month = request.GET.get("month")
         if month:
             docs = docs.filter(month=month)
+            
+        company = request.GET.get("company")
+        if company:
+            docs = docs.filter(company=company)
         
         serializer = AttendanceDocumentSerializer(docs.order_by("-date"), many=True)
         return Response({
@@ -215,6 +224,10 @@ class CandidateListCreateAPI(APIView):
 
         if status_filter:
             candidates = candidates.filter(status=status_filter)
+
+        company = request.GET.get("company")
+        if company:
+            candidates = candidates.filter(company=company)
 
         serializer = CandidateSerializer(candidates, many=True)
         return Response({
