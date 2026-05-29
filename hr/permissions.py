@@ -6,7 +6,7 @@ class IsHR(BasePermission):
         return (
             request.user and 
             request.user.is_authenticated and 
-            request.user.role == 'HR'
+            'view_candidates' in request.user.permissions
         )
 
 
@@ -15,7 +15,7 @@ class IsHROrAccounts(BasePermission):
         return (
             request.user and 
             request.user.is_authenticated and 
-            request.user.role in ['HR', 'ACCOUNTS']
+            'edit_penalties' in request.user.permissions
         )
 
 
@@ -24,7 +24,7 @@ class IsHROrAccountsOrAdmin(BasePermission):
         return (
             request.user and 
             request.user.is_authenticated and 
-            request.user.role in ['HR', 'ACCOUNTS', 'ADMIN']
+            'view_penalties' in request.user.permissions
         )
 
 
@@ -33,6 +33,6 @@ class IsAdminOnly(BasePermission):
         return (
             request.user and 
             request.user.is_authenticated and 
-            request.user.role == 'ADMIN'
+            'view_staff' in request.user.permissions
         )
 

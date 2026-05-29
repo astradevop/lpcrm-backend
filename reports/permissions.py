@@ -13,7 +13,7 @@ class IsReportReviewer(BasePermission):
     def has_permission(self, request, view):
         return (
             request.user.is_authenticated and
-            request.user.role in REPORT_REVIEWERS
+            'view_staff_reports' in request.user.permissions
         )
 
 

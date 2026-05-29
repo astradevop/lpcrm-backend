@@ -49,7 +49,8 @@ class StaffListSerializer(serializers.ModelSerializer):
             'is_active',
             'team',
             'salary',
-            'join_date'
+            'join_date',
+            'permissions'
         ]
         read_only_fields = fields
 
@@ -74,7 +75,8 @@ class StaffDetailSerializer(serializers.ModelSerializer):
             'office_phone',
             'location', 
             'salary',
-            'join_date'
+            'join_date',
+            'permissions'
         ]
         read_only_fields = ['date_joined', 'last_login']
 
@@ -127,7 +129,8 @@ class StaffUpdateSerializer(serializers.ModelSerializer):
             'office_phone',
             'location',
             'salary',
-            'join_date'
+            'join_date',
+            'permissions'
         ]
 
 

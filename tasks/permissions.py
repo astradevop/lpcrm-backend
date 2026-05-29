@@ -40,17 +40,13 @@ class IsTaskAssigner(BasePermission):
     def has_permission(self, request, view):
         return (
             request.user.is_authenticated
-            and request.user.role in TASK_ASSIGNERS
+            and 'edit_tasks' in request.user.permissions
         )
 
 
 class IsTaskAssignee(BasePermission):
     def has_permission(self, request, view):
-        return (
-            request.user.is_authenticated
-            and request.user.role in TASK_ASSIGNEES
-        )
-
+        return request.user.is_authenticated
 
 
 class IsAssigneeOrTaskAssigner(BasePermission):
@@ -61,7 +57,7 @@ class IsAssigneeOrTaskAssigner(BasePermission):
         if obj.assigned_to == request.user:
             return True
 
-        if request.user.role == "ADMIN" or request.user.role in TASK_ASSIGNERS:
+        if 'edit_tasks' in request.user.permissions:
             return True
 
         return False

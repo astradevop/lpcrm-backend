@@ -18,14 +18,22 @@ def _user_label(user):
 
 @receiver(pre_save, sender=User)
 def capture_user_old_state(sender, instance, **kwargs):
-    """Snapshot the old is_active before save so we can detect activation/deactivation."""
+    """Snapshot old state and handle granular permission templates."""
+    from .permission_templates import get_permissions_for_role
     if instance.pk:
         try:
-            instance._old_is_active = User.objects.get(pk=instance.pk).is_active
+            orig = User.objects.get(pk=instance.pk)
+            instance._old_is_active = orig.is_active
+            if orig.role != instance.role:
+                instance.permissions = get_permissions_for_role(instance.role)
         except User.DoesNotExist:
             instance._old_is_active = None
+            if not instance.permissions:
+                instance.permissions = get_permissions_for_role(instance.role)
     else:
         instance._old_is_active = None
+        if not instance.permissions:
+            instance.permissions = get_permissions_for_role(instance.role)
 
 
 @receiver(post_save, sender=User)

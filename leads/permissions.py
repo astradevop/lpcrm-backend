@@ -37,7 +37,7 @@ class CanAccessLeads(BasePermission):
     def has_permission(self, request, view):
         return (
             request.user.is_authenticated and
-            request.user.role in LEAD_ACCESS_ROLES
+            'view_leads' in request.user.permissions
         )
 
 
@@ -46,7 +46,7 @@ class CanAssignLeads(BasePermission):
         user = request.user
         return (
             user.is_authenticated and
-            user.role in LEAD_ACCESS_ROLES
+            'view_leads' in user.permissions
         )
 
 
@@ -54,7 +54,7 @@ class CanViewAllLeads(BasePermission):
     def has_permission(self, request, view):
         return (
             request.user.is_authenticated and
-            request.user.role in LEAD_VIEW_ALL_ROLES
+            'view_leads' in request.user.permissions
         )
 
 
@@ -62,14 +62,13 @@ class CanModifyAllLeads(BasePermission):
     def has_permission(self, request, view):
         return (
             request.user.is_authenticated and
-            request.user.role in FULL_ACCESS_ROLES
+            'view_staff' in request.user.permissions
         )
 
-CONVERSION_ROLES = ['ADMIN', 'OPS', 'CM', 'CEO', 'BUSINESS_HEAD']
 
 class CanManageConversion(BasePermission):
     def has_permission(self, request, view):
         return (
             request.user.is_authenticated and
-            request.user.role in CONVERSION_ROLES
+            'view_leads' in request.user.permissions
         )

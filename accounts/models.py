@@ -40,7 +40,7 @@ class User(AbstractUser):
     location = models.CharField(max_length=100, blank=True, null=True)
     salary = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
     join_date = models.DateField(blank=True, null=True)
-
+    permissions = models.JSONField(default=list, blank=True)
 
     # Resolve auth clashes
     groups = models.ManyToManyField(
