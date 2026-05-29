@@ -39,7 +39,8 @@ class PenaltySerializer(serializers.ModelSerializer):
             'act', 
             'amount', 
             'month', 
-            'date'
+            'date',
+            'company'
         ]
     
     def get_user_name(self, obj):
@@ -66,7 +67,8 @@ class AttendanceDocumentSerializer(serializers.ModelSerializer):
             "month",
             "document",
             "document_url",
-            "uploaded_at"
+            "uploaded_at",
+            "company"
         ]
     
     def get_document_url(self, obj):
@@ -97,6 +99,7 @@ class StaffSerializer(serializers.ModelSerializer):
             "salary",
             "join_date",
             "is_active",
+            "company",
         ]
     
     def get_full_name(self, obj):

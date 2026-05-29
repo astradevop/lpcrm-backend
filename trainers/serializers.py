@@ -38,7 +38,7 @@ class StudentSerializer(serializers.ModelSerializer):
             'id', 'name', 'batch', 'academic_batch', 'academic_batch_details', 
             'trainer', 'trainer_name', 'branch', 'branch_name',
             'status', 'admission_date', 'notes',
-            'email', 'phone_number', 'drive_link', 'student_class'
+            'email', 'phone_number', 'drive_link', 'student_class', 'company'
         ]
 
 # Attendance Serializer
@@ -51,7 +51,7 @@ class AttendanceSerializer(serializers.ModelSerializer):
         fields = [
             'id', 'date', 'trainer', 'trainer_name',
             'student', 'student_name',
-            'status', 'marked_at'
+            'status', 'marked_at', 'company'
         ]
         read_only_fields = ['trainer', 'marked_at']  
         extra_kwargs = {
@@ -67,7 +67,7 @@ class TrainerUserSerializer(serializers.ModelSerializer):
         model = User
         fields = [
             'id', 'username', 'email', 'first_name', 'last_name',
-            'full_name', 'role', 'phone', 'is_active'
+            'full_name', 'role', 'phone', 'is_active', 'company'
         ]
     
     def get_full_name(self, obj):

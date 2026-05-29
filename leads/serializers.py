@@ -30,7 +30,7 @@ class LeadCreateSerializer(serializers.ModelSerializer):
         fields = [
             'name', 'phone', 'email', 'source', 'custom_source',
             'priority', 'program', 'location', 'remarks', 'status',
-            'assigned_to',
+            'assigned_to', 'company',
         ]
 
     def validate_name(self, value):
@@ -239,7 +239,7 @@ class LeadListSerializer(serializers.ModelSerializer):
             'processing_status',
             'assigned_to', 'assigned_by', 'assigned_date',
             'sub_assigned_to', 'sub_assigned_by', 'sub_assigned_date',
-            'current_handler',
+            'current_handler', 'company',
             'created_at',
         ]
 
@@ -340,7 +340,7 @@ class LeadUpdateSerializer(serializers.ModelSerializer):
         model  = Lead
         fields = [
             'name', 'phone', 'email', 'location', 'remarks',
-            'priority', 'status', 'program', 'source', 'custom_source',
+            'priority', 'status', 'program', 'source', 'custom_source', 'company',
         ]
 
     def validate_priority(self, value):

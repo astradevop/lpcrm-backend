@@ -48,7 +48,7 @@ class DailyReportSerializer(serializers.ModelSerializer):
             "report_date", "status", "review_comment",
             "reviewed_by", "reviewed_by_name",
             "report_type", "submission_time", "next_day_agenda",
-            "created_at", "updated_at",
+            "created_at", "updated_at", "company"
         ]
         read_only_fields = [
             "user", "status", "reviewed_by", "review_comment",

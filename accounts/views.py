@@ -95,6 +95,7 @@ class CurrentUserAPIView(APIView):
             "first_name": user.first_name,
             "last_name": user.last_name,
             "role": user.role,
+            "company": user.company,
             "permissions": user.permissions,
             "phone": user.phone if hasattr(user, 'phone') else None,
             "location": user.location if hasattr(user, 'location') else None,
@@ -123,6 +124,7 @@ class LoginAPIView(APIView):
                 "first_name": user.first_name,
                 "last_name": user.last_name,
                 "role": user.role,
+                "company": user.company,
                 "permissions": user.permissions
             }
         }, status=status.HTTP_200_OK)
