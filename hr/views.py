@@ -35,7 +35,7 @@ class PenaltyListCreateAPI(APIView):
         # Filter by company
         company = request.GET.get("company")
         if company:
-            penalties = penalties.filter(company=company)
+            penalties = penalties.filter(user__company=company)
         
         # Serialize with user details
         serializer = PenaltySerializer(

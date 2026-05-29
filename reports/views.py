@@ -48,7 +48,7 @@ class MyDailyReportsView(generics.ListAPIView):
         
         company = self.request.query_params.get("company")
         if company:
-            qs = qs.filter(company=company)
+            qs = qs.filter(user__company=company)
             
         return qs.order_by("-report_date")
 
@@ -94,7 +94,7 @@ class AllDailyReportsView(generics.ListAPIView):
         if date:
             qs = qs.filter(report_date=date)
         if company:
-            qs = qs.filter(company=company)
+            qs = qs.filter(user__company=company)
 
         qs = qs.annotate(
             status_order=Case(
@@ -141,7 +141,7 @@ class AdminReportStatsView(APIView):
         
         company = request.query_params.get("company")
         if company:
-            qs = qs.filter(company=company)
+            qs = qs.filter(user__company=company)
 
         return Response(
             {
