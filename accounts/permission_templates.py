@@ -5,7 +5,7 @@ ROLE_PERMISSIONS = {
     'ADMIN': [
         'view_overview', 'view_leads', 'view_staff', 'view_all_tasks', 
         'view_students', 'view_staff_reports', 'view_voxbay',
-        'edit_tasks', 'edit_penalties', 'edit_candidates'
+        'edit_tasks', 'edit_penalties', 'edit_candidates', 'edit_staff', 'delete_staff'
     ],
     'CEO': [
         'view_overview', 'view_leads', 'view_staff', 'view_all_tasks', 
@@ -53,7 +53,7 @@ ROLE_PERMISSIONS = {
     'HR': [
         'view_overview', 'view_staff', 'view_penalties', 'view_attendance_docs', 
         'view_candidates', 'view_all_tasks', 'view_my_reports', 'view_staff_reports',
-        'edit_tasks', 'edit_penalties', 'edit_candidates'
+        'edit_tasks', 'edit_penalties', 'edit_candidates', 'edit_staff', 'delete_staff'
     ],
     'FOE': [
         'view_overview', 'view_leads', 'view_all_tasks', 'view_my_reports'
