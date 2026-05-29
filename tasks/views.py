@@ -40,10 +40,12 @@ def _task_queryset_for_user(user, base_qs=None):
     if base_qs is None:
         base_qs = Task.objects.select_related("assigned_to", "assigned_by")
 
-    if user.role in TOP_MANAGEMENT:
+    user_perms = getattr(user, 'permissions', []) or []
+
+    if 'view_all_tasks' in user_perms or user.role in TOP_MANAGEMENT:
         return base_qs
 
-    if user.role in OPERATIONS:
+    if 'edit_tasks' in user_perms or user.role in OPERATIONS:
         return base_qs.filter(
             Q(assigned_to=user) | Q(assigned_by=user)
         ).distinct()
@@ -208,12 +210,16 @@ class TaskDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
 
     def _check_edit_permission(self, task):
         user = self.request.user
-        if user.role in TOP_MANAGEMENT:
+        user_perms = getattr(user, 'permissions', []) or []
+        
+        if 'edit_tasks' in user_perms or user.role in TOP_MANAGEMENT:
             return
+            
         if user.role in OPERATIONS and task.assigned_by == user:
             return
+            
         raise PermissionDenied(
-            "Only the creator of this task can edit or delete it."
+            "Only the creator of this task or an authorized assigner can edit or delete it."
         )
 
     def update(self, request, *args, **kwargs):
