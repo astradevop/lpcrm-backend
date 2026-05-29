@@ -18,7 +18,7 @@ class LoginSerializer(serializers.Serializer):
             raise serializers.ValidationError("Invalid username or password")
         if not user.is_active:
             raise serializers.ValidationError(
-                "Your account is pending admin approval"
+                "Your account is inactive or pending admin approval."
             )
 
         user = authenticate(username=username, password=password)

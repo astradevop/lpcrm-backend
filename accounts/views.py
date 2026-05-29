@@ -276,19 +276,6 @@ class StaffUpdateView(generics.UpdateAPIView):
         )
 
 
-# Staff Delete View 
-class StaffDeleteView(generics.DestroyAPIView):
-    queryset = User.objects.all()
-    serializer_class = StaffDetailSerializer
-    permission_classes = [IsSuperAdmin]
-
-    def destroy(self, request, *args, **kwargs):
-        super().destroy(request, *args, **kwargs)
-        return Response(
-            {"message": "Staff deleted successfully"},
-            status=status.HTTP_204_NO_CONTENT
-        )
-
 
 
 

@@ -11,7 +11,6 @@ from .views import (
     StaffDetailView,
     StaffCreateView,
     StaffUpdateView,
-    StaffDeleteView,
     EmployeeListAPI
 )
 
@@ -26,7 +25,6 @@ urlpatterns = [
     path('staff/<int:pk>/', StaffDetailView.as_view(), name='staff_detail'),
     path('staff/create/', StaffCreateView.as_view(), name='staff_create'),
     path('staff/<int:pk>/update/', StaffUpdateView.as_view(), name='staff_update'),
-    path('staff/<int:pk>/delete/', StaffDeleteView.as_view(), name='staff_delete'),
     path('employees/', EmployeeListAPI.as_view()),
 
 ]
