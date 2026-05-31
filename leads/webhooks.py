@@ -48,12 +48,13 @@ def meta_webhook(request):
         )
         
         try:
-            from upstash_qstash import Client
+            from qstash import QStash
+            from django.urls import reverse
             token = getattr(settings, 'QSTASH_TOKEN', '')
             if token:
-                client = Client(token)
-                process_url = request.build_absolute_uri('/leads/api/meta/process/')
-                client.publish_json(
+                client = QStash(token)
+                process_url = request.build_absolute_uri(reverse('meta-process-webhook'))
+                client.message.publish_json(
                     url=process_url,
                     body={"webhook_log_id": log.id, "payload": payload}
                 )
@@ -70,7 +71,7 @@ def meta_process_webhook(request):
     Processes the Meta webhook payload received from QStash.
     """
     try:
-        from upstash_qstash import Receiver
+        from qstash import Receiver
         # Verify signature
         current_key = getattr(settings, 'QSTASH_CURRENT_SIGNING_KEY', '')
         next_key = getattr(settings, 'QSTASH_NEXT_SIGNING_KEY', '')
