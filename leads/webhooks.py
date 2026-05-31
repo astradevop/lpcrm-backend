@@ -31,7 +31,8 @@ def meta_webhook(request):
         
         # In a real app, verify against settings.META_VERIFY_TOKEN
         if mode == 'subscribe' and challenge:
-            return Response(int(challenge), status=status.HTTP_200_OK)
+            from django.http import HttpResponse
+            return HttpResponse(challenge, content_type='text/plain')
         return Response('Error, wrong validation token', status=status.HTTP_403_FORBIDDEN)
         
     elif request.method == 'POST':
